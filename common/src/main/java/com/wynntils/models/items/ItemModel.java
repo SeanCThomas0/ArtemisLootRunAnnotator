@@ -40,6 +40,7 @@ import com.wynntils.models.items.annotators.gui.ArchetypeAbilitiesAnnotator;
 import com.wynntils.models.items.annotators.gui.CosmeticTierAnnotator;
 import com.wynntils.models.items.annotators.gui.DailyRewardMultiplierAnnotator;
 import com.wynntils.models.items.annotators.gui.IngredientPouchAnnotator;
+import com.wynntils.models.items.annotators.gui.LootRunBoonAnnotator;
 import com.wynntils.models.items.annotators.gui.SeaskipperDestinationAnnotator;
 import com.wynntils.models.items.annotators.gui.ServerAnnotator;
 import com.wynntils.models.items.annotators.gui.SkillCrystalAnnotator;
@@ -97,10 +98,14 @@ public class ItemModel extends Model {
         Handlers.Item.registerAnnotator(new TerritoryAnnotator());
         Handlers.Item.registerAnnotator(new TerritoryUpgradeAnnotator());
 
+        // Testing Loot Run ANnotator
+        Handlers.Item.registerAnnotator(new LootRunBoonAnnotator());
+
         // ItemAnnotators
         // This must be done last
         Handlers.Item.registerAnnotator(new UnknownGearAnnotator());
         Handlers.Item.registerAnnotator(new MiscAnnotator());
+
         Handlers.Item.registerAnnotator(new FallbackAnnotator());
     }
 

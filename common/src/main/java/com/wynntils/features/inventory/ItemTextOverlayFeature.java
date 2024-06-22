@@ -1,5 +1,5 @@
 /*
- * Copyright © Wynntils 2022-2023.
+ * Copyright © Wynntils 2022-2024.
  * This file is released under LGPLv3. See LICENSE for full license details.
  */
 package com.wynntils.features.inventory;
@@ -26,6 +26,7 @@ import com.wynntils.models.items.items.game.HorseItem;
 import com.wynntils.models.items.items.game.PotionItem;
 import com.wynntils.models.items.items.game.PowderItem;
 import com.wynntils.models.items.items.game.TeleportScrollItem;
+import com.wynntils.models.items.items.gui.LootRunBoonItem;
 import com.wynntils.models.items.items.gui.SeaskipperDestinationItem;
 import com.wynntils.models.items.items.gui.SkillPointItem;
 import com.wynntils.utils.MathUtils;
@@ -181,6 +182,9 @@ public class ItemTextOverlayFeature extends Feature {
         if (wynnItem instanceof TeleportScrollItem teleportScrollItem) {
             return new TeleportScrollOverlay(teleportScrollItem);
         }
+        if (wynnItem instanceof LootRunBoonItem lootRunBoonItem) {
+            return new LootRunBoonOverlay(lootRunBoonItem);
+        }
 
         return null;
     }
@@ -217,6 +221,37 @@ public class ItemTextOverlayFeature extends Feature {
         @Override
         public boolean isTextOverlayEnabled() {
             return amplifierTierEnabled.get();
+        }
+    }
+
+    private final class LootRunBoonOverlay implements TextOverlayInfo {
+        private final LootRunBoonItem item;
+
+        private LootRunBoonOverlay(LootRunBoonItem item) {
+            this.item = item;
+        }
+
+        @Override
+        public boolean isTextOverlayEnabled() {
+            return horseTierEnabled.get();
+        }
+
+        @Override
+        public TextOverlay getTextOverlay() {
+            String text = valueToString((int) item.getStatAmount(), horseTierRomanNumerals.get());
+            TextRenderSetting style = TextRenderSetting.DEFAULT
+                    .withCustomColor(CustomColor.fromChatFormatting(ChatFormatting.DARK_AQUA))
+                    .withTextShadow(horseTierShadow.get())
+                    .withMaxWidth(56);
+
+            return new TextOverlay(
+                    new TextRenderTask(
+                            item.getTitle() + " \n" + item.getStatAmount() + " " + item.getStatAffected() + " " + "x"
+                                    + item.getMaxMultiplier(),
+                            style),
+                    -1,
+                    2,
+                    0.65f);
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright © Wynntils 2021-2023.
+ * Copyright © Wynntils 2021-2024.
  * This file is released under LGPLv3. See LICENSE for full license details.
  */
 package com.wynntils.utils.mc;
@@ -49,6 +49,19 @@ public final class LoreUtils {
         return lore;
     }
 
+    public static LinkedList<StyledText> getLoreSpaced(ItemStack itemStack) {
+        ListTag loreTag = getLoreTag(itemStack);
+
+        LinkedList<StyledText> lore = new LinkedList<>();
+        if (loreTag == null) return lore;
+
+        for (int i = 0; i < loreTag.size(); ++i) {
+            lore.add(StyledText.fromJson(loreTag.getString(i) + " "));
+        }
+
+        return lore;
+    }
+
     /**
      * Returns the lore for the given line, or the empty string if there is no
      * such line.
@@ -85,6 +98,10 @@ public final class LoreUtils {
      */
     public static StyledText getStringLore(ItemStack itemStack) {
         return StyledText.concat(getLore(itemStack));
+    }
+
+    public static StyledText getStringLoreSpaced(ItemStack itemStack) {
+        return StyledText.concat(getLoreSpaced(itemStack));
     }
 
     /** Get the lore NBT tag from an item, else return empty */
